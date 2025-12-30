@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class App extends Application{
     private Stage primaryStage;
-
+// HELLO GIT
     private final DatabaseConnection dbConnection = new DatabaseConnection();
 
     private final MovieDao movieDao = new MovieDao(dbConnection);
