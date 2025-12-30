@@ -12,11 +12,11 @@ public class HallDao extends GenericDao<Hall, Integer> {
         super(connection);
     }
 
-    private static final String INSERT_SQL = "INSERT INTO Hall (name, screen_type) VALUES (?, ?)";
-    private static final String UPDATE_SQL = "UPDATE Hall SET name=?, screen_type=? WHERE hid=?";
+    private static final String INSERT_SQL = "INSERT INTO Hall (name, screenType) VALUES (?, ?)";
+    private static final String UPDATE_SQL = "UPDATE Hall SET name=?, screenType=? WHERE hid=?";
     private static final String DELETE_SQL = "DELETE FROM Hall WHERE hid=?";
-    private static final String SELECT_ALL_SQL = "SELECT hid, name, screen_type FROM Hall";
-    private static final String SELECT_BY_ID_SQL = "SELECT hid, name, screen_type FROM Hall WHERE hid=?";
+    private static final String SELECT_ALL_SQL = "SELECT hid, name, screenType FROM Hall";
+    private static final String SELECT_BY_ID_SQL = "SELECT hid, name, screenType FROM Hall WHERE hid=?";
 
     @Override
     public void save(Hall hall) throws SQLException {
@@ -62,7 +62,7 @@ public class HallDao extends GenericDao<Hall, Integer> {
                 halls.add(new Hall(
                         rs.getInt("hid"),
                         rs.getString("name"),
-                        rs.getString("screen_type")));
+                        rs.getString("screenType")));
             }
         }
         return halls;
@@ -77,7 +77,7 @@ public class HallDao extends GenericDao<Hall, Integer> {
                     return new Hall(
                             rs.getInt("hid"),
                             rs.getString("name"),
-                            rs.getString("screen_type"));
+                            rs.getString("screenType"));
                 }
             }
         }

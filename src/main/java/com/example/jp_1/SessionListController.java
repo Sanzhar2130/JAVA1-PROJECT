@@ -48,7 +48,7 @@ public class SessionListController {
             sessionTable.setItems(FXCollections.observableArrayList(sessionDao.findAll()));
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Err", "Failed to load sessions: " + e.getMessage());
+            showAlert("Error", "Failed to load sessions: " + e.getMessage());
         }
     }
 
@@ -73,5 +73,10 @@ public class SessionListController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleCreateSession() {
+        app.showSessionForm();
     }
 }

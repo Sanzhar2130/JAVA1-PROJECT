@@ -55,6 +55,10 @@ public class Session {
         return startTime;
     }
 
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
     public Double getBasePrice() {
         return basePrice;
     }

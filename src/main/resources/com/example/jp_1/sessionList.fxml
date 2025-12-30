@@ -25,6 +25,7 @@
                 <Insets bottom="20.0" top="20.0" />
             </padding>
             <children>
+                <Button mnemonicParsing="false" onAction="#handleCreateSession" text="Create" />
                 <Button mnemonicParsing="false" onAction="#handleSelectSession" text="Select seats" />
                 <Button mnemonicParsing="false" onAction="#handleBack" text="Bact to menu" />
             </children>

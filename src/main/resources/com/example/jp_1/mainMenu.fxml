@@ -35,5 +35,7 @@
         </font>
     </Button>
 
+    <Button text="Create Client" onAction="#goToClientForm" prefWidth="200.0" />
+
     <Button maxWidth="200.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" textAlignment="CENTER" />
 </VBox>

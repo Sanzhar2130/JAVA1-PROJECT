@@ -3,6 +3,7 @@ package com.example.jp_1;
 import com.example.jp_1.dao.*;
 import com.example.jp_1.model.Session;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 
 public class App extends Application{
     private Stage primaryStage;
-// HELLO GIT
+
     private final DatabaseConnection dbConnection = new DatabaseConnection();
 
     private final MovieDao movieDao = new MovieDao(dbConnection);
@@ -23,6 +24,8 @@ public class App extends Application{
     private final TicketDao ticketDao = new TicketDao(dbConnection);
     private final BookingDao bookingDao = new BookingDao(dbConnection);
     private final GenreDao genreDao = new GenreDao(dbConnection);
+    private final HallDao hallDao = new HallDao(dbConnection);
+    private final ClientDao clientDao = new ClientDao(dbConnection);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -101,12 +104,43 @@ public class App extends Application{
             SessionViewController controller = loader.getController();// Предполагаем, что вы добавили метод setApp в SessionViewController
             controller.setApp(this);
 
-            controller.initData(session, this.seatDao, this.ticketDao, this.bookingDao);
+            controller.initData(session, this.seatDao, this.ticketDao, this.bookingDao, this.clientDao);
             // controller.setDaos(seatDao, ticketDao, bookingDao);
 
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public void showSessionForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("sessionForm.fxml"));
+            Parent root = loader.load();
+
+            SessionFormController controller = loader.getController();
+            controller.setApp(this);
+            controller.setDaos(this.sessionDao, this.movieDao, this.hallDao);
+
+            primaryStage.setScene(new Scene(root, 600, 400));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); }
+    }
+
+    public void showClientForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("clientForm.fxml"));
+            Parent root = loader.load();
+
+            ClientFormController controller = loader.getController();
+            controller.setApp(this);
+            controller.setClientDao(this.clientDao);
+
+            primaryStage.setScene(new Scene(root, 600, 400));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

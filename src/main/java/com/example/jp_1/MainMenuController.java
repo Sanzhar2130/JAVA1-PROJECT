@@ -23,6 +23,11 @@ public class MainMenuController {
     }
 
     @FXML
+    private void goToClientForm(ActionEvent event) {
+        app.showClientForm();
+    }
+
+    @FXML
     private void goToBooking(ActionEvent event) {
         System.out.println("Go to Booking (Not implemented yet)");
     }

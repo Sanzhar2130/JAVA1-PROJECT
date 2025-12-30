@@ -2,11 +2,14 @@ package com.example.jp_1;
 
 import com.example.jp_1.dao.*;
 import com.example.jp_1.model.*;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.util.StringConverter;
+import javafx.scene.control.ComboBox;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,12 +22,14 @@ public class SessionViewController {
     @FXML private Label sessionInfoLabel;
     @FXML private GridPane seatGrid;
     @FXML private Label totalPriceLabel;
+    @FXML private ComboBox<Client> clientComboBox;
 
     private App app;
     private Session currentSession;
     private  SeatDao seatDao;
     private TicketDao ticketDao;
     private BookingDao bookingDao;
+    private ClientDao clientDao;
 
     private final List<Seat> selectedSeats = new ArrayList<>();
 
@@ -32,14 +37,16 @@ public class SessionViewController {
         this.app = app;
     }
 
-    public void initData(Session session, SeatDao seatDao, TicketDao ticketDao, BookingDao bookingDao) {
+    public void initData(Session session, SeatDao seatDao, TicketDao ticketDao, BookingDao bookingDao, ClientDao clientDao) {
         this.currentSession = session;
         this.seatDao = seatDao;
         this.ticketDao = ticketDao;
         this.bookingDao = bookingDao;
+        this.clientDao = clientDao;
 
         updateHeader();
         loadSeats();
+        loadClients();
     }
 
     private void updateHeader() {
@@ -50,7 +57,6 @@ public class SessionViewController {
     private void loadSeats() {
         try {
             List<Seat> allSeats = seatDao.findByHid(currentSession.getHid());
-
             List<Integer> occupiedIds = ticketDao.findOccupiedSid(currentSession.getSessId());
 
             seatGrid.getChildren().clear();
@@ -66,7 +72,6 @@ public class SessionViewController {
                     seatBtn.setStyle("-fx-background-color: #ccffcc; -fx-border-color: green;");
                     seatBtn.setOnAction(e -> toggleSeatSelection(seatBtn, seat));
                 }
-
                 seatGrid.add(seatBtn, seat.getSeatNumber() - 1, seat.getRowNumber() - 1);
             }
         } catch (SQLException e) {
@@ -98,9 +103,15 @@ public class SessionViewController {
             return;
         }
 
+        Client selectedClient = clientComboBox.getValue();
+        if (selectedClient == null) {
+            showAlert("Error", "Please select a client!");
+            return;
+        }
+
         try {
             Booking booking = new Booking();
-            booking.setClientId(1);
+            booking.setClientId(selectedClient.getClientId());
             booking.setBookingCode("B-" + System.currentTimeMillis());
             booking.setCreatedAt(LocalDateTime.now());
             booking.setStatus("Confirmed");
@@ -129,6 +140,27 @@ public class SessionViewController {
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Database Error", "Failed to purchase tickets: " + e.getMessage());
+        }
+    }
+
+    private void loadClients() {
+        if (clientDao == null) {
+            return;
+        }
+        try {
+            List<Client> clients = clientDao.findAll();
+            clientComboBox.setItems(FXCollections.observableArrayList(clients));
+            clientComboBox.setConverter(new StringConverter<>() {
+                @Override
+                public String toString(Client c) {
+                    return c == null ? "" : c.getFirstName() + " " + c.getLastName();
+                }
+                @Override
+                public Client fromString(String string) { return null; }
+            });
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
