@@ -19,7 +19,7 @@ public class BookingDao extends GenericDao<Booking, Integer> {
 
     @Override
     public void save(Booking booking) throws SQLException {
-        try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL)) {
+        try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, booking.getClientId());
             statement.setString(2, booking.getBookingCode());
             statement.setTimestamp(3, Timestamp.valueOf(booking.getCreatedAt()));
