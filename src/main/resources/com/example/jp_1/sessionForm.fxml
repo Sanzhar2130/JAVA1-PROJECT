@@ -28,8 +28,8 @@
 
         <HBox spacing="10.0">
             <children>
-                <Button text="Save" onAction="#handleSaveButton" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" />
-                <Button text="Cancel" onAction="#handleBack" />
+                <Button text="Save" onAction="#onSaveClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" />
+                <Button text="Cancel" onAction="#onCancelClick" />
             </children>
             <padding>
                 <Insets top="10.0" />

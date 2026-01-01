@@ -64,7 +64,13 @@ public class TicketDao extends GenericDao<Ticket, Integer>{
         try (Statement statement = getConnection().createStatement()) {
             ResultSet rs = statement.executeQuery(SELECT_ALL_SQL);
             while (rs.next()) {
-                tickets.add(new Ticket(rs.getInt("tid"), rs.getInt("bid"), rs.getInt("sess_id"), rs.getInt("sid"), rs.getInt("ttid"), rs.getDouble("price")));
+                tickets.add(new Ticket(
+                        rs.getInt("tid"),
+                        rs.getInt("bid"),
+                        rs.getInt("sess_id"),
+                        rs.getInt("sid"),
+                        rs.getInt("ttid"),
+                        rs.getDouble("price")));
             }
         }
         return tickets;
@@ -76,7 +82,13 @@ public class TicketDao extends GenericDao<Ticket, Integer>{
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
-                    return new Ticket(rs.getInt("tid"), rs.getInt("bid"), rs.getInt("sess_id"), rs.getInt("sid"), rs.getInt("ttid"), rs.getDouble("price"));
+                    return new Ticket(
+                            rs.getInt("tid"),
+                            rs.getInt("bid"),
+                            rs.getInt("sess_id"),
+                            rs.getInt("sid"),
+                            rs.getInt("ttid"),
+                            rs.getDouble("price"));
                 }
             }
         }

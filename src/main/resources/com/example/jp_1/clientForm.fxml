@@ -23,7 +23,7 @@
         <Label text="Email:" />
         <TextField fx:id="emailField" maxWidth="250.0" />
 
-        <Label text="Phone:" />
+        <Label text="Phone Number:" />
         <TextField fx:id="phoneField" maxWidth="250.0" />
 
         <HBox spacing="10.0">

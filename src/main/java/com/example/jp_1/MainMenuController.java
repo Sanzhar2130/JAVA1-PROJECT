@@ -28,11 +28,6 @@ public class MainMenuController {
     }
 
     @FXML
-    private void goToBooking(ActionEvent event) {
-        System.out.println("Go to Booking (Not implemented yet)");
-    }
-
-    @FXML
     private void exitApp(ActionEvent event) {
         System.exit(0);
     }

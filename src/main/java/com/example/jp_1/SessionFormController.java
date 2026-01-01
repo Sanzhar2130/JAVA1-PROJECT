@@ -24,6 +24,7 @@ public class SessionFormController {
     private SessionDao sessionDao;
     private MovieDao movieDao;
     private HallDao hallDao;
+    private Session sessionToEdit = null;
 
     @FXML
     private ComboBox<Movie> movieComboBox;
@@ -90,7 +91,7 @@ public class SessionFormController {
     }
 
     @FXML
-    private void handleSaveButton(ActionEvent event) {
+    private void onSaveClick(ActionEvent event) {
         Movie selectedMovie = movieComboBox.getValue();
         Hall selectedHall = hallComboBox.getValue();
         String startTimeStr = startTimeField.getText();
@@ -127,7 +128,12 @@ public class SessionFormController {
 
         try {
             if (sessionDao != null) {
-                sessionDao.save(session);
+                if (sessionToEdit == null) {
+                    sessionDao.save(session);
+                } else {
+                    session.setSessId(sessionToEdit.getSessId());
+                    sessionDao.update(session);
+                }
                 if (app != null) {
                     app.showSessionList();
                 }
@@ -139,7 +145,7 @@ public class SessionFormController {
     }
 
     @FXML
-    private void handleBack() {
+    private void onCancelClick() {
         if (app != null) {
             app.showSessionList();
         }
@@ -151,5 +157,25 @@ public class SessionFormController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setSessionToEdit(Session session) {
+        this.sessionToEdit = session;
+        if (session != null) {
+            priceField.setText(String.valueOf(session.getBasePrice()));
+            startTimeField.setText(session.getStartTime().format(formatter));
+            for (Movie m : movieComboBox.getItems()) {
+                if (m.getMid().equals(session.getMid())) {
+                    movieComboBox.setValue(m);
+                    break;
+                }
+            }
+            for (Hall h : hallComboBox.getItems()) {
+                if (h.getHid().equals(session.getHid())) {
+                    hallComboBox.setValue(h);
+                    break;
+                }
+            }
+        }
     }
 }

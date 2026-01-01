@@ -17,12 +17,18 @@ public class SessionListController {
     private App app;
     private SessionDao sessionDao;
 
-    @FXML private TableView<Session> sessionTable;
-    @FXML private TableColumn<Session, Integer> colId;
-    @FXML private TableColumn<Session, Integer> colMovie;
-    @FXML private TableColumn<Session, Integer> colHall;
-    @FXML private TableColumn<Session, LocalDateTime> colTime;
-    @FXML private TableColumn<Session, Double> colPrice;
+    @FXML
+    private TableView<Session> sessionTable;
+    @FXML
+    private TableColumn<Session, Integer> colId;
+    @FXML
+    private TableColumn<Session, Integer> colMovie;
+    @FXML
+    private TableColumn<Session, Integer> colHall;
+    @FXML
+    private TableColumn<Session, LocalDateTime> colTime;
+    @FXML
+    private TableColumn<Session, Double> colPrice;
 
     public void setApp(App app) {
         this.app = app;
@@ -77,6 +83,34 @@ public class SessionListController {
 
     @FXML
     private void handleCreateSession() {
-        app.showSessionForm();
+        app.showSessionForm(null);
+    }
+
+    @FXML
+    private void handleEditSession() {
+        Session selected = sessionTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            app.showSessionForm(selected);
+        } else {
+            showAlert("Warning", "Select session from the list!");
+        }
+    }
+
+    @FXML
+    private void handleDeleteSession() {
+        Session selected = sessionTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Error", "Select a session to delete");
+            return;
+        }
+        try {
+            if (sessionDao != null) {
+                sessionDao.delete(selected.getSessId());
+                loadData();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to delete session: " + e.getMessage());
+        }
     }
 }

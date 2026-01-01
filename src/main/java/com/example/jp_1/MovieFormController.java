@@ -31,6 +31,7 @@ public class MovieFormController {
 
     private MovieDao movieDao;
     private GenreDao genreDao;
+    private Movie movieToEdit = null;
 
     private App app;
 
@@ -104,7 +105,12 @@ public class MovieFormController {
 
         try {
             if (movieDao != null) {
-                movieDao.save(movie);
+                if (movieToEdit == null) {
+                    movieDao.save(movie);
+                } else {
+                    movie.setMid(movieToEdit.getMid());
+                    movieDao.update(movie);
+                }
                 if (app != null) {
                     app.showMovieList();
                 }
@@ -119,6 +125,25 @@ public class MovieFormController {
     private void onCancelClick(ActionEvent event) throws IOException {
         if (app != null) {
             app.showMovieList();
+        }
+    }
+
+    public void setMovieToEdit(Movie movie) {
+        this.movieToEdit = movie;
+        if (movie != null) {
+            titleField.setText(movie.getTitle());
+            directorField.setText(movie.getDirector());
+            durationField.setText(String.valueOf(movie.getDurationMinutes()));
+            descriptionArea.setText(movie.getDescription());
+
+            if (movie.getGid() != null) {
+                for (Genre g : genreComboBox.getItems()) {
+                    if (g.getGid() == movie.getGid()) {
+                        genreComboBox.setValue(g);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

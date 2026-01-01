@@ -60,7 +60,9 @@ public class GenreDao extends GenericDao<Genre, Integer>{
         try (Statement statement = getConnection().createStatement();
              ResultSet rs = statement.executeQuery(SELECT_ALL_SQL)) {
             while (rs.next()) {
-                genres.add(new Genre(rs.getInt("gid"), rs.getString("name")));
+                genres.add(new Genre(
+                        rs.getInt("gid"),
+                        rs.getString("name")));
             }
         }
         return genres;
@@ -72,7 +74,9 @@ public class GenreDao extends GenericDao<Genre, Integer>{
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()){
                 if (rs.next()) {
-                    return new Genre(rs.getInt("gid"), rs.getString("name"));
+                    return new Genre(
+                            rs.getInt("gid"),
+                            rs.getString("name"));
                 }
             }
         }

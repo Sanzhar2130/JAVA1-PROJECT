@@ -1,6 +1,7 @@
 package com.example.jp_1;
 
 import com.example.jp_1.dao.*;
+import com.example.jp_1.model.Movie;
 import com.example.jp_1.model.Session;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -68,14 +69,17 @@ public class App extends Application{
 
     }
 
-    public void showMovieForm() {
+    public void showMovieForm(Movie movieToEdit) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("movieForm.fxml"));
             Parent root = loader.load();
-
             MovieFormController controller = loader.getController();
             controller.setApp(this);
             controller.setDaos(this.movieDao, this.genreDao);
+
+            if (movieToEdit != null) {
+                controller.setMovieToEdit(movieToEdit);
+            }
 
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
@@ -112,14 +116,17 @@ public class App extends Application{
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    public void showSessionForm() {
+    public void showSessionForm(Session sessionToEdit) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("sessionForm.fxml"));
             Parent root = loader.load();
-
             SessionFormController controller = loader.getController();
             controller.setApp(this);
             controller.setDaos(this.sessionDao, this.movieDao, this.hallDao);
+
+            if (sessionToEdit != null) {
+                controller.setSessionToEdit(sessionToEdit);
+            }
 
             primaryStage.setScene(new Scene(root, 600, 400));
             primaryStage.show();

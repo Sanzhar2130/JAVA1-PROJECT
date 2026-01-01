@@ -25,26 +25,18 @@ import java.util.ResourceBundle;
 public class MovieListController implements Initializable {
     @FXML
     private TableView<Movie> moviesTable;
-
     @FXML
     private TableColumn<Movie, Integer> idColumn;
-
     @FXML
     private TableColumn<Movie, String> titleColumn;
-
     @FXML
     private TableColumn<Movie, String> directorColumn;
-
     @FXML
     private TableColumn<Movie, Integer> durationColumn;
-
     @FXML
     private Button deleteButton;
-
     private ObservableList<Movie> moviesList = FXCollections.observableArrayList();
-
     private MovieDao movieDao;
-
     private App app;
 
     public void setApp(App app) {
@@ -81,10 +73,11 @@ public class MovieListController implements Initializable {
         }
     }
 
+
     @FXML
     private void handleAddMovie(ActionEvent event) {
         if (app != null) {
-            app.showMovieForm();
+            app.showMovieForm(null);
         }
     }
 
@@ -121,6 +114,14 @@ public class MovieListController implements Initializable {
         alert.showAndWait();
     }
 
-
+    @FXML
+    private void handleEditMovie() {
+        Movie selected = moviesTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlertDialog(Alert.AlertType.WARNING, "No Selection", "Please select a movie to edit.");
+            return;
+        }
+        app.showMovieForm(selected);
+    }
 
 }

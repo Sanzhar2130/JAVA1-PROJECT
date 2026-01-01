@@ -57,6 +57,14 @@ public class MovieDao extends GenericDao<Movie, Integer> {
             statement.setString(5, movie.getDescription());
             statement.setInt(6, movie.getMid());
             statement.executeUpdate();
+
+            if (movie.getGid() != null) {
+                statement.setInt(5, movie.getGid());
+            } else {
+                statement.setNull(5, java.sql.Types.INTEGER);
+            }
+            statement.setInt(6, movie.getMid());
+            statement.executeUpdate();
         }
     }
 

@@ -26,7 +26,9 @@
             </padding>
             <children>
                 <Button mnemonicParsing="false" onAction="#handleCreateSession" text="Create" />
+                <Button mnemonicParsing="false" onAction="#handleEditSession" text="Edit session" />
                 <Button mnemonicParsing="false" onAction="#handleSelectSession" text="Select seats" />
+                <Button mnemonicParsing="false" onAction="#handleDeleteSession" text="Delete Session" />
                 <Button mnemonicParsing="false" onAction="#handleBack" text="Bact to menu" />
             </children>
         </HBox>

@@ -11,11 +11,11 @@ public class BookingDao extends GenericDao<Booking, Integer> {
         super(connection);
     }
 
-    private static final String INSERT_SQL = "INSERT INTO Booking (client_id, bookingCode, createdAt, status, paymentMethod, totalPrice) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_SQL = "UPDATE Booking SET client_id=?, bookingCode=?, createdAt=?, status=?, paymentMethod=?, totalPrice=? WHERE bid=?";
+    private static final String INSERT_SQL = "INSERT INTO Booking (client_id, booking_code, created_at, status, payment_method, total_price) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_SQL = "UPDATE Booking SET client_id=?, booking_code=?, created_at=?, status=?, payment_method=?, total_price=? WHERE bid=?";
     private static final String DELETE_SQL = "DELETE FROM Booking WHERE bid=?";
-    private static final String SELECT_ALL_SQL = "SELECT bid, client_id, bookingCode, createdAt, status, paymentMethod, totalPrice FROM Booking";
-    private static final String SELECT_BY_ID_SQL = "SELECT bid, client_id, bookingCode, createdAt, status, paymentMethod, totalPrice FROM Booking WHERE bid=?";
+    private static final String SELECT_ALL_SQL = "SELECT bid, client_id, booking_code, created_at, status, payment_method, total_price FROM Booking";
+    private static final String SELECT_BY_ID_SQL = "SELECT bid, client_id, booking_code, created_at, status, payment_method, total_price FROM Booking WHERE bid=?";
 
     @Override
     public void save(Booking booking) throws SQLException {
@@ -69,11 +69,11 @@ public class BookingDao extends GenericDao<Booking, Integer> {
                 bookings.add(new Booking(
                         rs.getInt("bid"),
                         rs.getInt("client_id"),
-                        rs.getString("bookingCode"),
-                        rs.getTimestamp("createdAt").toLocalDateTime(),
+                        rs.getString("booking_code"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getString("status"),
-                        rs.getString("paymentMethod"),
-                        rs.getDouble("totalPrice")));
+                        rs.getString("payment_method"),
+                        rs.getDouble("total_price")));
             }
         }
         return bookings;
@@ -87,12 +87,12 @@ public class BookingDao extends GenericDao<Booking, Integer> {
                 if (rs.next()) {
                     return new Booking(
                             rs.getInt("bid"),
-                            rs.getInt("clientId"),
-                            rs.getString("bookingCode"),
-                            rs.getTimestamp("createdAt").toLocalDateTime(),
+                            rs.getInt("client_id"),
+                            rs.getString("booking_code"),
+                            rs.getTimestamp("created_at").toLocalDateTime(),
                             rs.getString("status"),
-                            rs.getString("paymentMethod"),
-                            rs.getDouble("totalPrice"));
+                            rs.getString("payment_method"),
+                            rs.getDouble("total_price"));
                 }
             }
         }

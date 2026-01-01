@@ -58,7 +58,10 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
         try (Statement statement = getConnection().createStatement()) {
             ResultSet rs = statement.executeQuery(SELECT_ALL_SQL);
             while (rs.next()) {
-                types.add(new TicketType(rs.getInt("ttid"), rs.getString("name"), rs.getDouble("discount_percent")));
+                types.add(new TicketType(
+                        rs.getInt("ttid"),
+                        rs.getString("name"),
+                        rs.getDouble("discount_percent")));
             }
         }
         return types;
@@ -70,7 +73,10 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
             statement.setInt(1, id);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
-                    return new TicketType(rs.getInt("ttid"), rs.getString("name"), rs.getDouble("discount_percent"));
+                    return new TicketType(
+                            rs.getInt("ttid"),
+                            rs.getString("name"),
+                            rs.getDouble("discount_percent"));
                 }
             }
         }

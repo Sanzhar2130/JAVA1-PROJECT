@@ -11,11 +11,11 @@ public class SessionDao extends GenericDao<Session, Integer> {
         super(connection);
     }
 
-    private static final String INSERT_SQL = "INSERT INTO Session (mid, hid, startTime, basePrice) VALUES (?, ?, ?, ?)";
-    private static final String UPDATE_SQL = "UPDATE Session SET mid=?, hid=?, startTime=?, basePrice=? WHERE sessId=?";
-    private static final String DELETE_SQL = "DELETE FROM Session WHERE sessId=?";
-    private static final String SELECT_ALL_SQL = "SELECT sessId, mid, hid, startTime, basePrice FROM Session";
-    private static final String SELECT_BY_ID_SQL = "SELECT sessId, mid, hid, startTime, basePrice FROM Session WHERE sessId=?";
+    private static final String INSERT_SQL = "INSERT INTO Session (mid, hid, start_time, base_price) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE_SQL = "UPDATE Session SET mid=?, hid=?, start_time=?, base_price=? WHERE sess_id=?";
+    private static final String DELETE_SQL = "DELETE FROM Session WHERE sess_id=?";
+    private static final String SELECT_ALL_SQL = "SELECT sess_id, mid, hid, start_time, base_price FROM Session";
+    private static final String SELECT_BY_ID_SQL = "SELECT sess_id, mid, hid, start_time, base_price FROM Session WHERE sess_id=?";
 
     @Override
     public void save(Session session) throws SQLException {
@@ -52,6 +52,7 @@ public class SessionDao extends GenericDao<Session, Integer> {
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
+            statement.executeUpdate();
         }
     }
 
@@ -62,11 +63,11 @@ public class SessionDao extends GenericDao<Session, Integer> {
              ResultSet rs = statement.executeQuery(SELECT_ALL_SQL)) {
             while (rs.next()) {
                 sessions.add(new Session(
-                        rs.getInt("sessId"),
+                        rs.getInt("sess_id"),
                         rs.getInt("mid"),
                         rs.getInt("hid"),
-                        rs.getTimestamp("startTime").toLocalDateTime(),
-                        rs.getDouble("basePrice")));
+                        rs.getTimestamp("start_time").toLocalDateTime(),
+                        rs.getDouble("base_price")));
             }
         }
         return sessions;
@@ -79,11 +80,11 @@ public class SessionDao extends GenericDao<Session, Integer> {
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     return new Session(
-                            rs.getInt("sessId"),
+                            rs.getInt("sess_id"),
                             rs.getInt("mid"),
                             rs.getInt("hid"),
-                            rs.getTimestamp("startTime").toLocalDateTime(),
-                            rs.getDouble("basePrice"));
+                            rs.getTimestamp("start_time").toLocalDateTime(),
+                            rs.getDouble("base_price"));
                 }
             }
         }

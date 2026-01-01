@@ -23,19 +23,17 @@
         </font>
     </Button>
 
-    <Button maxWidth="200.0" mnemonicParsing="false" onAction="#goToSessions" text="Sessions (TODO)" textAlignment="CENTER">
+    <Button maxWidth="200.0" mnemonicParsing="false" onAction="#goToSessions" text="Sessions" textAlignment="CENTER">
         <font>
             <Font size="18.0" />
         </font>
     </Button>
 
-    <Button maxWidth="200.0" mnemonicParsing="false" onAction="#goToBooking" text="Booking (TODO)" textAlignment="CENTER" style="-fx-background-color: #4CAF50; -fx-text-fill: white;">
+    <Button maxWidth="200.0" mnemonicParsing="false" onAction="#goToClientForm" text="Create Client" textAlignment="CENTER">
         <font>
-            <Font name="System Bold" size="18.0" />
+            <Font size="18.0" />
         </font>
     </Button>
-
-    <Button text="Create Client" onAction="#goToClientForm" prefWidth="200.0" />
 
     <Button maxWidth="200.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" textAlignment="CENTER" />
 </VBox>

@@ -11,10 +11,14 @@ import java.sql.SQLException;
 
 public class ClientFormController {
 
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField emailField;
-    @FXML private TextField phoneField;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
 
     private App app;
     private ClientDao clientDao;
@@ -35,7 +39,7 @@ public class ClientFormController {
         String phone = phoneField.getText();
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
-            showAlert("Ошибка", "Имя, Фамилия и Email обязательны!");
+            showAlert("Error", "First name, Last name and Email are required");
             return;
         }
 
@@ -47,11 +51,11 @@ public class ClientFormController {
 
         try {
             clientDao.save(client);
-            showAlert("Успех", "Клиент успешно добавлен!");
+            showAlert("Success", "The client has been successfully added");
             if (app != null) app.showMainMenu();
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Ошибка БД", "Не удалось сохранить клиента: " + e.getMessage());
+            showAlert("Error", "Couldn't save the client: " + e.getMessage());
         }
     }
 
