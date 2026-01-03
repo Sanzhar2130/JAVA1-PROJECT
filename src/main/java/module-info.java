@@ -10,7 +10,6 @@ module com.example.jp_1 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
-    requires annotations;
 
     opens com.example.jp_1 to javafx.fxml;
     opens com.example.jp_1.model to javafx.base;
