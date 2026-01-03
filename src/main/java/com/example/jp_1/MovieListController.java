@@ -30,6 +30,8 @@ public class MovieListController implements Initializable {
     @FXML
     private TableColumn<Movie, Integer> durationColumn;
     @FXML
+    private TableColumn<Movie, String> descriptionColumn;
+    @FXML
     private Button deleteButton;
     private ObservableList<Movie> moviesList = FXCollections.observableArrayList();
     private MovieDao movieDao;
@@ -50,6 +52,7 @@ public class MovieListController implements Initializable {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         directorColumn.setCellValueFactory(new PropertyValueFactory<>("director"));
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinutes"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         moviesTable.setItems(moviesList);
     }

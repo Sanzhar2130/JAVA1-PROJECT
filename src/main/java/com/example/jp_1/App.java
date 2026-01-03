@@ -42,7 +42,6 @@ public class App extends Application{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("mainMenu.fxml"));
             Parent root = loader.load();
-
             MainMenuController controller = loader.getController();
             controller.setApp(this);
             primaryStage.setScene(new Scene(root, 800, 600));
@@ -56,11 +55,9 @@ public class App extends Application{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("movieList.fxml"));
             Parent root = loader.load();
-
             MovieListController controller = loader.getController();
             controller.setApp(this);
             controller.setMovieDao(this.movieDao);
-
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         } catch (IOException e) {
@@ -104,13 +101,9 @@ public class App extends Application{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("sessionView.fxml"));
             Parent root = loader.load();
-
             SessionViewController controller = loader.getController();// Предполагаем, что вы добавили метод setApp в SessionViewController
             controller.setApp(this);
-
             controller.initData(session, this.seatDao, this.ticketDao, this.bookingDao, this.clientDao);
-            // controller.setDaos(seatDao, ticketDao, bookingDao);
-
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         } catch (IOException e) { e.printStackTrace(); }
@@ -138,11 +131,9 @@ public class App extends Application{
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("clientForm.fxml"));
             Parent root = loader.load();
-
             ClientFormController controller = loader.getController();
             controller.setApp(this);
             controller.setClientDao(this.clientDao);
-
             primaryStage.setScene(new Scene(root, 600, 400));
             primaryStage.show();
         } catch (IOException e) {

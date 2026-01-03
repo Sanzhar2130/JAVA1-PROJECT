@@ -48,7 +48,7 @@
                     <Label text="Select Client:" />
                     <ComboBox fx:id="clientComboBox" prefWidth="200.0" promptText="Choose a client..." />
                 </HBox>
-                <Label fx:id="totalPriceLabel" text="Итого: 0.0" textFill="#e40000">
+                <Label fx:id="totalPriceLabel" text="Total: 0.0" textFill="#e40000">
                     <font>
                         <Font size="18.0" />
                     </font>
