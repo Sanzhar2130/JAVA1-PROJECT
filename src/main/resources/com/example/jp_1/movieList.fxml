@@ -34,7 +34,7 @@
                 <TableView fx:id="moviesTable" prefHeight="400.0" prefWidth="700.0">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
-                        <TableColumn fx:id="titleColumn" prefWidth="250.0" text="Title" />
+                        <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
                         <TableColumn fx:id="directorColumn" prefWidth="150.0" text="Director" />
                         <TableColumn fx:id="durationColumn" prefWidth="100.0" text="Duration (min)" />
                         <TableColumn fx:id="descriptionColumn" prefWidth="250.0" text="Description" />

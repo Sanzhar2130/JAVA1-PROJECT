@@ -11,11 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
+
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -31,11 +35,13 @@ public class SessionFormController {
     @FXML
     private ComboBox<Hall> hallComboBox;
     @FXML
-    private TextField startTimeField;
+    private DatePicker datePicker;
+    @FXML
+    private TextField timeField;
     @FXML
     private TextField priceField;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public void setApp(App app) {
         this.app = app;
@@ -94,7 +100,8 @@ public class SessionFormController {
     private void onSaveClick(ActionEvent event) {
         Movie selectedMovie = movieComboBox.getValue();
         Hall selectedHall = hallComboBox.getValue();
-        String startTimeStr = startTimeField.getText();
+
+        String startTimeStr = timeField.getText();
         String priceStr = priceField.getText();
 
         if (selectedMovie == null || selectedHall == null || startTimeStr.isEmpty() || priceStr.isEmpty()) {
@@ -163,7 +170,7 @@ public class SessionFormController {
         this.sessionToEdit = session;
         if (session != null) {
             priceField.setText(String.valueOf(session.getBasePrice()));
-            startTimeField.setText(session.getStartTime().format(formatter));
+            timeField.setText(session.getStartTime().format(formatter));
             for (Movie m : movieComboBox.getItems()) {
                 if (m.getMid().equals(session.getMid())) {
                     movieComboBox.setValue(m);

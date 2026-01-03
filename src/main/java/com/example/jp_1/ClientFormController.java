@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ClientFormController {
@@ -51,6 +54,7 @@ public class ClientFormController {
 
         try {
             clientDao.save(client);
+            saveClientToFile(client);
             showAlert("Success", "The client has been successfully added");
             if (app != null) app.showMainMenu();
         } catch (SQLException e) {
@@ -70,5 +74,23 @@ public class ClientFormController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private void saveClientToFile(Client client) {
+        String filename = "clientExport.txt";
+
+        try (FileWriter fileWriter = new FileWriter(filename, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            String line = String.format("ID: %d | Name: %s %s | Email: %s | Phone: %s",
+                    client.getClientId(),
+                    client.getFirstName(),
+                    client.getLastName(),
+                    client.getEmail(),
+                    client.getPhone());
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            showAlert("Error", "Could not save client: " + e.getMessage());
+        }
     }
 }

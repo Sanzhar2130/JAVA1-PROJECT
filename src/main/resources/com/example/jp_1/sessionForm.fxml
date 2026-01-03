@@ -21,8 +21,11 @@
         <Label text="Hall"/>
         <ComboBox fx:id="hallComboBox" prefWidth="200.0" promptText="Select Hall" />
 
-        <Label text="Start Time (yyyy-MM-dd HH:mm):" />
-        <DatePicker fx:id="startTimePicker" promptText="2025-12-31 18:00" maxWidth="200.0" />
+        <Label text="Date (yyyy-MM-dd):" />
+        <DatePicker fx:id="datePicker" maxWidth="200.0" />
+
+        <Label text="Time (HH:mm):" />
+        <TextField fx:id="timeField" promptText="16:00" maxWidth="200.0" />
 
         <Label text="Price (CZK):" />
         <TextField fx:id="priceField" promptText="250.0" maxWidth="200.0" />
