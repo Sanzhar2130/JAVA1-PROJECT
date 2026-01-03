@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MovieDao extends GenericDao<Movie, Integer> {
+public class MovieDao {
+    private final DatabaseConnection databaseConnection;
     public MovieDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO Movie (gid, title, director, duration_minutes, description) VALUES (?, ?, ?, ?, ?)";
@@ -22,7 +23,10 @@ public class MovieDao extends GenericDao<Movie, Integer> {
     private static final String SELECT_ALL_SQL = "SELECT mid, gid, title, director, duration_minutes, description FROM Movie";
     private static final String SELECT_BY_ID_SQL = "SELECT mid, gid, title, director, duration_minutes, description FROM Movie WHERE mid=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(Movie movie) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, movie.getGid());
@@ -47,7 +51,6 @@ public class MovieDao extends GenericDao<Movie, Integer> {
         }
     }
 
-    @Override
     public void update(Movie movie) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setInt(1, movie.getGid());
@@ -68,7 +71,6 @@ public class MovieDao extends GenericDao<Movie, Integer> {
         }
     }
 
-    @Override
     public void delete(Integer mid) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, mid);
@@ -76,7 +78,6 @@ public class MovieDao extends GenericDao<Movie, Integer> {
         }
     }
 
-    @Override
     public List<Movie> findAll() throws SQLException{
         List<Movie> movies = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
@@ -88,7 +89,6 @@ public class MovieDao extends GenericDao<Movie, Integer> {
         return movies;
     }
 
-    @Override
     public Movie findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);

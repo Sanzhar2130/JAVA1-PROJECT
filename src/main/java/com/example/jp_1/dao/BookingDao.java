@@ -6,9 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookingDao extends GenericDao<Booking, Integer> {
+public class BookingDao {
+    private final DatabaseConnection databaseConnection;
+
     public BookingDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO Booking (client_id, booking_code, created_at, status, payment_method, total_price) VALUES (?, ?, ?, ?, ?, ?)";
@@ -17,7 +19,10 @@ public class BookingDao extends GenericDao<Booking, Integer> {
     private static final String SELECT_ALL_SQL = "SELECT bid, client_id, booking_code, created_at, status, payment_method, total_price FROM Booking";
     private static final String SELECT_BY_ID_SQL = "SELECT bid, client_id, booking_code, created_at, status, payment_method, total_price FROM Booking WHERE bid=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(Booking booking) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, booking.getClientId());
@@ -38,7 +43,6 @@ public class BookingDao extends GenericDao<Booking, Integer> {
         }
     }
 
-    @Override
     public void update(Booking booking) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setInt(1, booking.getClientId());
@@ -52,7 +56,6 @@ public class BookingDao extends GenericDao<Booking, Integer> {
         }
     }
 
-    @Override
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
@@ -60,7 +63,6 @@ public class BookingDao extends GenericDao<Booking, Integer> {
         }
     }
 
-    @Override
     public List<Booking> findAll() throws SQLException {
         List<Booking> bookings = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
@@ -79,7 +81,6 @@ public class BookingDao extends GenericDao<Booking, Integer> {
         return bookings;
     }
 
-    @Override
     public Booking findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);

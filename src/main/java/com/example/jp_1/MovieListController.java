@@ -1,10 +1,7 @@
 package com.example.jp_1;
 
-import com.almasb.fxgl.entity.action.Action;
-import com.example.jp_1.dao.GenericDao;
 import com.example.jp_1.dao.MovieDao;
 import com.example.jp_1.model.Movie;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

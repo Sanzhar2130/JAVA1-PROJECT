@@ -6,9 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenreDao extends GenericDao<Genre, Integer>{
+public class GenreDao {
+    private final DatabaseConnection databaseConnection;
+
     public GenreDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO Genre (name) VALUES (?)";
@@ -17,7 +19,10 @@ public class GenreDao extends GenericDao<Genre, Integer>{
     private static final String SELECT_ALL_SQL = "SELECT gid, name FROM Genre";
     private static final String SELECT_BY_ID_SQL = "SELECT gid, name FROM Genre WHERE gid=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(Genre genre) throws SQLException {
         try (PreparedStatement stmt = getConnection().prepareStatement(INSERT_SQL)) {
             stmt.setString(1, genre.getName());
@@ -37,7 +42,6 @@ public class GenreDao extends GenericDao<Genre, Integer>{
         }
     }
 
-    @Override
     public void update(Genre genre) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setString(1, genre.getName());
@@ -46,7 +50,6 @@ public class GenreDao extends GenericDao<Genre, Integer>{
         }
     }
 
-    @Override
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
@@ -54,7 +57,6 @@ public class GenreDao extends GenericDao<Genre, Integer>{
         }
     }
 
-    @Override
     public List<Genre> findAll() throws SQLException {
         List<Genre> genres = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
@@ -68,7 +70,6 @@ public class GenreDao extends GenericDao<Genre, Integer>{
         return genres;
     }
 
-    @Override
     public Genre findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);

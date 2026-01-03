@@ -9,8 +9,6 @@ module com.example.jp_1 {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
-    requires com.microsoft.sqlserver.jdbc;
     requires java.sql;
     requires annotations;
 

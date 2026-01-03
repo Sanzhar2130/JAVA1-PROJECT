@@ -6,9 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionDao extends GenericDao<Session, Integer> {
+public class SessionDao  {
+    private final DatabaseConnection databaseConnection;
+
     public SessionDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO Session (mid, hid, start_time, base_price) VALUES (?, ?, ?, ?)";
@@ -17,7 +19,10 @@ public class SessionDao extends GenericDao<Session, Integer> {
     private static final String SELECT_ALL_SQL = "SELECT sess_id, mid, hid, start_time, base_price FROM Session";
     private static final String SELECT_BY_ID_SQL = "SELECT sess_id, mid, hid, start_time, base_price FROM Session WHERE sess_id=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(Session session) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, session.getMid());
@@ -36,7 +41,6 @@ public class SessionDao extends GenericDao<Session, Integer> {
         }
     }
 
-    @Override
     public void update(Session session) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setInt(1, session.getMid());
@@ -48,7 +52,6 @@ public class SessionDao extends GenericDao<Session, Integer> {
         }
     }
 
-    @Override
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
@@ -56,7 +59,6 @@ public class SessionDao extends GenericDao<Session, Integer> {
         }
     }
 
-    @Override
     public List<Session> findAll() throws SQLException {
         List<Session> sessions = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
@@ -73,7 +75,6 @@ public class SessionDao extends GenericDao<Session, Integer> {
         return sessions;
     }
 
-    @Override
     public Session findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);

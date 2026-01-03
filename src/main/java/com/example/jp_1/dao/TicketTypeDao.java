@@ -6,9 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketTypeDao extends GenericDao<TicketType, Integer> {
+public class TicketTypeDao {
+    private final DatabaseConnection databaseConnection;
     public TicketTypeDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO TicketType (name, discount_percent) VALUES (?, ?)";
@@ -17,7 +18,10 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
     private static final String SELECT_ALL_SQL = "SELECT ttid, name, discount_percent FROM TicketType";
     private static final String SELECT_BY_ID_SQL = "SELECT ttid, name, discount_percent FROM TicketType WHERE ttid=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(TicketType type) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, type.getName());
@@ -34,7 +38,6 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
         }
     }
 
-    @Override
     public void update(TicketType type) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setString(1, type.getName());
@@ -44,7 +47,6 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
         }
     }
 
-    @Override
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
@@ -52,7 +54,6 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
         }
     }
 
-    @Override
     public List<TicketType> findAll() throws SQLException {
         List<TicketType> types = new ArrayList<>();
         try (Statement statement = getConnection().createStatement()) {
@@ -67,7 +68,6 @@ public class TicketTypeDao extends GenericDao<TicketType, Integer> {
         return types;
     }
 
-    @Override
     public TicketType findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);

@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import javafx.scene.control.ComboBox;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -132,14 +133,12 @@ public class SessionViewController {
             }
 
             showAlert("Success", "Tickets purchased successfully!");
-
             selectedSeats.clear();
             updateTotalPrice();
             loadSeats();
-
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Database Error", "Failed to purchase tickets: " + e.getMessage());
+            showAlert("Error", "Failed to purchase tickets: " + e.getMessage());
         }
     }
 

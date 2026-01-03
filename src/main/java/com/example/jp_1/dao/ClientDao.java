@@ -7,9 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDao extends GenericDao<Client, Integer> {
+public class ClientDao {
+    private final DatabaseConnection databaseConnection;
     public ClientDao(DatabaseConnection connection) {
-        super(connection);
+        this.databaseConnection = connection;
     }
 
     private static final String INSERT_SQL = "INSERT INTO Client (fname, lname, email, phone) VALUES (?, ?, ?, ?)";
@@ -18,7 +19,10 @@ public class ClientDao extends GenericDao<Client, Integer> {
     private static final String SELECT_ALL_SQL = "SELECT client_id, fname, lname, email, phone FROM Client";
     private static final String SELECT_BY_ID_SQL = "SELECT client_id, fname, lname, email, phone FROM Client WHERE client_id=?";
 
-    @Override
+    Connection getConnection() throws SQLException {
+        return databaseConnection.getConnection();
+    }
+
     public void save(Client client) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, client.getFirstName());
@@ -41,7 +45,6 @@ public class ClientDao extends GenericDao<Client, Integer> {
         }
     }
 
-    @Override
     public void update(Client client) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_SQL)) {
             statement.setString(1, client.getFirstName());
@@ -53,7 +56,6 @@ public class ClientDao extends GenericDao<Client, Integer> {
         }
     }
 
-    @Override
     public void delete(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(DELETE_SQL)) {
             statement.setInt(1, id);
@@ -61,7 +63,6 @@ public class ClientDao extends GenericDao<Client, Integer> {
         }
     }
 
-    @Override
     public List<Client> findAll() throws SQLException {
         List<Client> clients = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
@@ -73,7 +74,6 @@ public class ClientDao extends GenericDao<Client, Integer> {
         return clients;
     }
 
-    @Override
     public Client findById(Integer id) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(SELECT_BY_ID_SQL)) {
             statement.setInt(1, id);
