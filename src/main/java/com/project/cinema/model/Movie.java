@@ -76,9 +76,4 @@ public class Movie {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
-
 }
