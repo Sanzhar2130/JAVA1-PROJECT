@@ -1,9 +1,9 @@
-module com.example.jp_1 {
+module com.project.cinema {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.base;
     requires java.sql;
-    opens com.example.jp_1 to javafx.fxml;
-    opens com.example.jp_1.model to javafx.base;
-    exports com.example.jp_1;
+    opens com.project.cinema to javafx.fxml;
+    opens com.project.cinema.model to javafx.base;
+    exports com.project.cinema;
 }
