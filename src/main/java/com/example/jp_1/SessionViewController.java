@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import javafx.scene.control.ComboBox;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

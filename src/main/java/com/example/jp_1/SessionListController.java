@@ -2,7 +2,6 @@ package com.example.jp_1;
 
 import com.example.jp_1.dao.SessionDao;
 import com.example.jp_1.model.Session;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
