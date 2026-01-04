@@ -61,7 +61,7 @@ public class SessionViewController {
     private void loadSeats() {
         try {
             List<Seat> allSeats = seatDao.findByHid(currentSession.getHid());
-            List<Integer> occupiedIds = ticketDao.findOccupiedSid(currentSession.getSessId());
+            List<Integer> occupiedIds = ticketDao.findOccupiedSessId(currentSession.getSessId());
 
             seatGrid.getChildren().clear();
 

@@ -31,7 +31,9 @@
                 <Button text="Save" onAction="#onSaveClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
                 <Button text="Cancel" onAction="#onCancelClick" />
             </children>
-            <padding><Insets top="10.0" /></padding>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
         </HBox>
     </children>
 </VBox>

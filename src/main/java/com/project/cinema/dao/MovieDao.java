@@ -62,11 +62,10 @@ public class MovieDao {
             statement.executeUpdate();
 
             if (movie.getGid() != null) {
-                statement.setInt(5, movie.getGid());
+                statement.setInt(1, movie.getGid());
             } else {
-                statement.setNull(5, java.sql.Types.INTEGER);
+                statement.setNull(1, java.sql.Types.INTEGER);
             }
-            statement.setInt(6, movie.getMid());
             statement.executeUpdate();
         }
     }

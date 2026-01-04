@@ -29,10 +29,8 @@ public class App extends Application{
     public void start(Stage stage) throws IOException {
         this.primaryStage = stage;
         this.primaryStage.setTitle("Cinema Project ZHA0067");
-//        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
         showMainMenu();
-
     }
 
     public void showMainMenu() {
@@ -75,7 +73,7 @@ public class App extends Application{
                 controller.setMovieToEdit(movieToEdit);
             }
 
-            primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.setScene(new Scene(root, 600, 600));
             primaryStage.show();
         }catch (IOException e) {
             e.printStackTrace();

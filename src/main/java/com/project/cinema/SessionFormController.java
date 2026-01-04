@@ -100,7 +100,6 @@ public class SessionFormController {
     private void onSaveClick(ActionEvent event) {
         Movie selectedMovie = movieComboBox.getValue();
         Hall selectedHall = hallComboBox.getValue();
-
         LocalDate selectedDate = datePicker.getValue();
         String startTimeStr = timeField.getText();
         String priceStr = priceField.getText();

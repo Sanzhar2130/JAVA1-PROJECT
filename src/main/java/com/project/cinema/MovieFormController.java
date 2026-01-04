@@ -136,7 +136,6 @@ public class MovieFormController {
             directorField.setText(movie.getDirector());
             durationField.setText(String.valueOf(movie.getDurationMinutes()));
             descriptionArea.setText(movie.getDescription());
-
             if (movie.getGid() != null) {
                 for (Genre g : genreComboBox.getItems()) {
                     if (g.getGid() == movie.getGid()) {

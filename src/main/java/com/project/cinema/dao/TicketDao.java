@@ -95,7 +95,7 @@ public class TicketDao {
         return null;
     }
 
-    public List<Integer> findOccupiedSid(int sessId) throws SQLException {
+    public List<Integer> findOccupiedSessId(int sessId) throws SQLException {
         String sql = "SELECT * FROM Ticket WHERE sess_id = ?";
         List<Integer> occupiedIds = new ArrayList<>();
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
