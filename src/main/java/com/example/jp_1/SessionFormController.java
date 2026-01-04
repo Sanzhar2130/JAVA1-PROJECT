@@ -101,10 +101,11 @@ public class SessionFormController {
         Movie selectedMovie = movieComboBox.getValue();
         Hall selectedHall = hallComboBox.getValue();
 
+        LocalDate selectedDate = datePicker.getValue();
         String startTimeStr = timeField.getText();
         String priceStr = priceField.getText();
 
-        if (selectedMovie == null || selectedHall == null || startTimeStr.isEmpty() || priceStr.isEmpty()) {
+        if (selectedMovie == null || selectedHall == null || selectedDate == null || startTimeStr.isEmpty() || priceStr.isEmpty()) {
             showAlert("Error: Please fill in all required fields");
             return;
         }
@@ -113,7 +114,8 @@ public class SessionFormController {
         double price;
 
         try {
-            startTime = LocalDateTime.parse(startTimeStr, formatter);
+            LocalTime time = LocalTime.parse(startTimeStr, formatter);
+            startTime = LocalDateTime.of(selectedDate, time);
         } catch (Exception e) {
             showAlert("Error: Invalid start time: " + e.getMessage());
             return;
@@ -171,6 +173,7 @@ public class SessionFormController {
         if (session != null) {
             priceField.setText(String.valueOf(session.getBasePrice()));
             timeField.setText(session.getStartTime().format(formatter));
+            datePicker.setValue(session.getStartTime().toLocalDate());
             for (Movie m : movieComboBox.getItems()) {
                 if (m.getMid().equals(session.getMid())) {
                     movieComboBox.setValue(m);
